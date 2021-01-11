@@ -1,35 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   ft_printf_pourcent.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahammad <ahammad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/25 21:15:30 by ahammad           #+#    #+#             */
-/*   Updated: 2020/12/27 16:20:47 by ahammad          ###   ########.fr       */
+/*   Created: 2020/09/08 17:53:04 by ahammad           #+#    #+#             */
+/*   Updated: 2021/01/09 14:32:21 by ahammad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int		ft_atoi(const char *str)
-{
-	int	signe;
-	int	i;
-	int	nb;
+#include "ft_printf.h"
 
-	signe = 1;
-	i = 0;
-	nb = 0;
-	while ((str[i] >= 7 && str[i] <= 13) || str[i] == ' ')
-		i++;
-	if (str[i] == '-')
-		signe = -1;
-	if (str[i] == '-' || str[i] == '+')
-		i++;
-	while (str[i] >= '0' && str[i] <= '9')
+void	ft_printf_pourcent(va_list *my_list, t_options *op)
+{
+	(void)my_list;
+	(void)op;
+	if (op->less == 1)
 	{
-		nb = nb * 10;
-		nb = nb + str[i] - 48;
-		i++;
+		ft_putchar('%', &op->len);
+		while (--op->width)
+		{
+			ft_putchar(' ', &op->len);
+		}
+		return ;
 	}
-	return (signe * nb);
+	while (op->width-- > 1)
+	{
+		if (op->zero == 1)
+			ft_putchar('0', &op->len);
+		else
+			ft_putchar(' ', &op->len);
+	}
+	ft_putchar('%', &op->len);
 }

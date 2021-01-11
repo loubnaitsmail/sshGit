@@ -3,83 +3,65 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mde-la-s <mde-la-s@student.42.fr>          +#+  +:+       +#+         #
+#    By: ahammad <ahammad@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2020/11/26 15:31:23 by mde-la-s          #+#    #+#              #
-#    Updated: 2020/12/18 13:35:57 by mde-la-s         ###   ########.fr        #
+#    Created: 2020/09/12 16:49:26 by ahammad           #+#    #+#              #
+#    Updated: 2021/01/09 11:32:10 by ahammad          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME	=	libft.a
+NAME = libftprintf
 
-SRCS	=	ft_atoi.c \
-		ft_bzero.c \
-		ft_calloc.c \
-		ft_isalnum.c \
-		ft_isalpha.c \
-		ft_isascii.c \
-		ft_isdigit.c \
-		ft_isprint.c \
-		ft_itoa.c \
-		ft_memccpy.c \
-		ft_memchr.c \
-		ft_memcmp.c \
-		ft_memcpy.c \
-		ft_memmove.c \
-		ft_memset.c \
-		ft_putchar_fd.c \
-		ft_putendl_fd.c \
-		ft_putnbr_fd.c \
-		ft_putstr_fd.c \
-		ft_split.c \
-		ft_strchr.c \
-		ft_strdup.c \
-		ft_strjoin.c \
-		ft_strlcat.c \
-		ft_strlcpy.c \
-		ft_strlen.c \
-		ft_strmapi.c \
-		ft_strncmp.c \
-		ft_strnstr.c \
-		ft_strrchr.c \
-		ft_strtrim.c \
-		ft_substr.c \
-		ft_tolower.c \
-		ft_toupper.c
+FLAGS = -Wall -Wextra -Werror
 
-BONUS	=	ft_lstadd_back.c \
-		ft_lstadd_front.c \
-		ft_lstclear.c \
-		ft_lstdelone.c \
-		ft_lstiter.c \
-		ft_lstlast.c \
-		ft_lstmap.c \
-		ft_lstnew.c \
-		ft_lstsize.c
+CC = gcc
 
-OBJS	=	${SRCS:.c=.o}
+HEADER = ft_printf.h
 
-OBJSBONUS = 	${BONUS:.c=.o}
+SRCS =  ft_abs.c\
+		ft_atoi.c\
+		ft_isdigit.c\
+		ft_nbrlen_u.c\
+		ft_nbrlen.c\
+		ft_printf_adress.c\
+		ft_printf_c.c\
+		ft_printf_hexa.c\
+		ft_printf_hx.c\
+		ft_printf_pourcent.c\
+		ft_printf_signed.c\
+		ft_printf_str.c\
+		ft_printf_unsigned.c\
+		ft_printf_nbr.c\
+		ft_printf.c\
+		ft_putchar.c\
+		ft_putnbr_base.c\
+		ft_putnbr_u.c\
+		ft_putnbr.c\
+		ft_putnstr.c\
+		ft_strlen.c\
+		ft_nbrlen_lu.c\
+		ft_check_op.c\
 
-CC	=	gcc
+OBJS = $(SRCS:.c=.o)
 
-CFLAGS	=	-Wall -Wextra -Werror
+all: $(NAME)
 
-all	:	 ${NAME}
+%.o: %.c
+	$(CC) -c $< $(FLAGS)
 
-$(NAME)	: ${OBJS}
-	${CC} ${CFLAGS} -c ${SRCS}
-	ar rcs ${NAME} ${OBJS}
+$(NAME): $(OBJS)
+	ar rc $(NAME).a $(OBJS)
+	ranlib $(NAME).a
 
-bonus:	${OBJS} ${OBJSBONUS}
-		ar rcs ${NAME} ${OBJS} ${OBJSBONUS}
+clean:
+	rm -f $(OBJS) 
 
-clean	:
-	rm -f ${OBJS} ${OBJSBONUS}
+fclean: clean
+	rm -f $(NAME).a
 
-fclean	: clean
-	rm -f ${NAME}
+re: fclean all
 
-re		: fclean all
+norme:
+	~/.norminette/norminette.rb $(SRCS) $(HEADER)
 
-.PHONY : all clean fclean re
+.PHONY : all bonus clean fclean norme re
